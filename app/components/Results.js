@@ -93,10 +93,22 @@ export default class Results extends React.Component {
     }
 
     return (
-      <div className='grid space-around container-sm'>
-        <UserCard user={winner} header={winner.score === loser.score ? 'Tie' : 'Winner'}/>
-        <UserCard user={loser} header={winner.score === loser.score ? 'Tie' : 'Loser'}/>
-      </div>
+      <React.Fragment>
+        <div className='grid space-around container-sm'>
+          <UserCard user={winner} header={winner.score === loser.score ? 'Tie' : 'Winner'}/>
+          <UserCard user={loser} header={winner.score === loser.score ? 'Tie' : 'Loser'}/>
+        </div>
+        <button className='btn-dark btn btn-space'
+                onClick={this.props.onReset}>
+          Reset
+        </button>
+      </React.Fragment>
     )
   }
+}
+
+Results.propTypes = {
+  playerOne: PropTypes.string.isRequired,
+  playerTwo: PropTypes.string.isRequired,
+  onReset: PropTypes.func.isRequired
 }
