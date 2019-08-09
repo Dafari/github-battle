@@ -1,51 +1,45 @@
 import React from 'react'
 import { battle } from "../utils/api";
 import { FaCompass, FaBriefcase, FaUser, FaUsers, FaUserFriends, FaCode } from "react-icons/fa";
+import Card from "./Card";
 
-function UserCard({ user, text }) {
+function UserCard({ user, header }) {
   return (
-    <div className='card bg-light'>
-      <h4 className='header-lg center-text'>
-        {text}
-      </h4>
-      <img className='avatar'
-           src={user.profile.avatar_url}
-           alt={`Avatart for ${user.profile.login}`}/>
-      <h4 className='center-text'>
-        Score: {user.score.toLocaleString()}
-      </h4>
-      <h2 className='center-text'>
-        <a className='link' href={user.profile.html_url}>
-          {user.profile.login}
-        </a>
-      </h2>
-      <ul className='card-list'>
-        <li>
-          <FaUser color='rgb(239, 115, 115)' size={22}/>
-          {user.profile.name}
-        </li>
-        {user.profile.location && (
+
+    <React.Fragment>
+      <Card href={user.profile.html_url}
+            avatar={user.profile.avatar_url}
+            name={user.profile.login}
+            header={header}
+            subheader={`Score: ${user.score.toLocaleString()}`}>
+        <ul className='card-list'>
           <li>
-            <FaCompass color='rgb(144, 115, 255)' size={22}/>
-            {user.profile.location}
+            <FaUser color='rgb(239, 115, 115)' size={22}/>
+            {user.profile.name}
           </li>
-        )}
-        {user.profile.company && (
+          {user.profile.location && (
+            <li>
+              <FaCompass color='rgb(144, 115, 255)' size={22}/>
+              {user.profile.location}
+            </li>
+          )}
+          {user.profile.company && (
+            <li>
+              <FaBriefcase color='#795548' size={22}/>
+              {user.profile.company}
+            </li>
+          )}
           <li>
-            <FaBriefcase color='#795548' size={22}/>
-            {user.profile.company}
+            <FaUsers color='rgb(129, 195, 245)' size={22}/>
+            {user.profile.followers.toLocaleString()} followers
           </li>
-        )}
-        <li>
-          <FaUsers color='rgb(129, 195, 245)' size={22}/>
-          {user.profile.followers.toLocaleString()} followers
-        </li>
-        <li>
-          <FaUserFriends color='rgb(64, 183, 95)' size={22}/>
-          {user.profile.following.toLocaleString()} following
-        </li>
-      </ul>
-    </div>
+          <li>
+            <FaUserFriends color='rgb(64, 183, 95)' size={22}/>
+            {user.profile.following.toLocaleString()} following
+          </li>
+        </ul>
+      </Card>
+    </React.Fragment>
   )
 }
 
@@ -96,8 +90,8 @@ export default class Results extends React.Component {
 
     return (
       <div className='grid space-around container-sm'>
-        <UserCard user={winner} text={winner.score === loser.score ? 'Tie' : 'Winner'}/>
-        <UserCard user={loser} text={winner.score === loser.score ? 'Tie' : 'Loser'}/>
+        <UserCard user={winner} header={winner.score === loser.score ? 'Tie' : 'Winner'}/>
+        <UserCard user={loser} header={winner.score === loser.score ? 'Tie' : 'Loser'}/>
       </div>
     )
   }
