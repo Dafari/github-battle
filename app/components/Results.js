@@ -2,10 +2,10 @@ import React from 'react'
 import { battle } from "../utils/api";
 import { FaCompass, FaBriefcase, FaUser, FaUsers, FaUserFriends, FaCode } from "react-icons/fa";
 import Card from "./Card";
+import PropTypes from 'prop-types'
 
 function UserCard({ user, header }) {
   return (
-
     <React.Fragment>
       <Card href={user.profile.html_url}
             avatar={user.profile.avatar_url}
@@ -41,6 +41,11 @@ function UserCard({ user, header }) {
       </Card>
     </React.Fragment>
   )
+}
+
+UserCard.propTypes = {
+  user: PropTypes.object.isRequired,
+  header: PropTypes.string.isRequired
 }
 
 export default class Results extends React.Component {
@@ -86,7 +91,6 @@ export default class Results extends React.Component {
         <p className='center-text error'>${error}</p>
       )
     }
-
 
     return (
       <div className='grid space-around container-sm'>
