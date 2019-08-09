@@ -11,12 +11,15 @@ const Battle = React.lazy(() => import('./components/Battle'))
 const Results = React.lazy(() => import('./components/Results'))
 
 class App extends React.Component {
+  currentTheme = localStorage.getItem('theme') != null ? localStorage.getItem('theme') : 'light'
+  
   state = {
-    theme: 'light',
+    theme: this.currentTheme,
     toggleTheme: () => {
       this.setState(({ theme }) => ({
         theme: theme === 'light' ? 'dark' : 'light'
       }))
+      localStorage.setItem('theme', this.state.theme === 'light' ? 'dark' : 'light');
     }
   }
 
