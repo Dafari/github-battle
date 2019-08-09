@@ -3,6 +3,7 @@ import { battle } from "../utils/api";
 import { FaCompass, FaBriefcase, FaUser, FaUsers, FaUserFriends, FaCode } from "react-icons/fa";
 import Card from "./Card";
 import PropTypes from 'prop-types'
+import Loading from "./Loading";
 
 function UserCard({ user, header }) {
   return (
@@ -83,7 +84,7 @@ export default class Results extends React.Component {
     const { winner, loser, error, loading } = this.state
 
     if (loading === true) {
-      return <p>LOADING</p>
+      return <Loading text='Battling'/>
     }
 
     if (error) {
