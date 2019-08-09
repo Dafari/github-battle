@@ -5,6 +5,9 @@ import Card from "./Card";
 import PropTypes from 'prop-types'
 import Loading from "./Loading";
 import Tooltip from "./Tooltip";
+import queryString from 'query-string'
+import { Link } from "react-router-dom";
+
 
 function UserCard({ user, header }) {
   return (
@@ -67,7 +70,7 @@ export default class Results extends React.Component {
   }
 
   componentDidMount() {
-    const { playerOne, playerTwo } = this.props
+    const { playerOne, playerTwo } = queryString.parse(this.props.location.search)
 
     battle([ playerOne, playerTwo ])
       .then((players) => {
@@ -104,17 +107,12 @@ export default class Results extends React.Component {
           <UserCard user={winner} header={winner.score === loser.score ? 'Tie' : 'Winner'}/>
           <UserCard user={loser} header={winner.score === loser.score ? 'Tie' : 'Loser'}/>
         </div>
-        <button className='btn-dark btn btn-space'
-                onClick={this.props.onReset}>
+        <Link className='btn-dark btn btn-space'
+              to='/battle'
+        >
           Reset
-        </button>
+        </Link>
       </React.Fragment>
     )
   }
-}
-
-Results.propTypes = {
-  playerOne: PropTypes.string.isRequired,
-  playerTwo: PropTypes.string.isRequired,
-  onReset: PropTypes.func.isRequired
 }
